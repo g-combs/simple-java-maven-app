@@ -48,10 +48,8 @@ pipeline {
 
 def deployBonsai(bonsaiEnv) {
     stage('deployBonsai: ${bonsaiEnv}') {
-        steps {
-            echo "Deploying to Bonsai Env: ${bonsaiEnv}"
-            sh 'mvn verify'
-        }
+        echo "Deploying to Bonsai Env: ${bonsaiEnv}"
+        sh 'mvn verify'
     }
 }
 
