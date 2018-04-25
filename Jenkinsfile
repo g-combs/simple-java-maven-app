@@ -12,6 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building ${env.BUILD_ID} on ${env.JENKINS_URL}: ${env.GIT_BRANCH}"
+                sh 'printevn'
                 sh 'mvn clean package -DskipTests'
             }
         }
@@ -28,9 +29,7 @@ pipeline {
         }
         stage('Deploy To QA') {
             when {
-                not {
-                    branch 'master'
-                }
+                branch 'integration'
             }
             steps {
                 echo "Deploying ${env.BUILD_ID} to QA on ${env.JENKINS_URL}"
