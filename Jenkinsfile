@@ -48,7 +48,9 @@ pipeline {
 
 def deployBonsai(bonsaiEnv) {
     stage('deployBonsai: ${bonsaiEnv}') {
-        echo "Deploying to Bonsai Env: ${bonsaiEnv}"
+        steps {
+            echo "Deploying to Bonsai Env: ${bonsaiEnv}"
+        }
     }
 }
 
