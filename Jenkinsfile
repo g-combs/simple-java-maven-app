@@ -32,6 +32,7 @@ pipeline {
             }
             steps {
                 echo "Deploying ${env.BUILD_ID} to QA on ${env.JENKINS_URL}"
+                deployQA()
             }
         }
         stage('Deploying To PROD') {
@@ -43,4 +44,14 @@ pipeline {
             }
         }
     }
+}
+
+def deployBonsai(bonsaiEnv) {
+    stage('deployBonsai: ${bonsaiEnv}') {
+        echo "Deploying to Bonsai Env: ${bonsaiEnv}"
+    }
+}
+
+def deployQA() {
+    deployBonsai("build-qa")
 }
