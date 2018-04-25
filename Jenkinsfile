@@ -1,17 +1,22 @@
 pipeline {
     agent any
+    environment {
+        BARK_INSTALL_URL=""
+    }
     tools {
         maven 'mvn3.5.3'
     }
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                echo 'Building ${env.BUILD_ID} on ${env.JENKINS_URL}'
+                sh 'mvn clean package -DskipTests'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                echo 'Testing ${env.BUILD_ID} on ${env.JENKINS_URL}'
+                sh 'mvn verify'
             }
             post {
                 always {
@@ -19,9 +24,22 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deploying To QA') {
+            when {
+                not {
+                    branch 'master'
+                }
+            }
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                echo 'Deploying ${env.BUILD_ID} to QA on ${env.JENKINS_URL}'
+            }
+        }
+        stage('Deploying To PROD') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Deploying ${env.BUILD_ID} to PROD on ${env.JENKINS_URL}'
             }
         }
     }
