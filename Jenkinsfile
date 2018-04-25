@@ -9,13 +9,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building ${env.BUILD_ID} on ${env.JENKINS_URL}'
+                echo "Building ${env.BUILD_ID} on ${env.JENKINS_URL}: ${env.GIT_BRANCH}"
                 sh 'mvn clean package -DskipTests'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing ${env.BUILD_ID} on ${env.JENKINS_URL}'
+                echo "Testing ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 sh 'mvn verify'
             }
             post {
@@ -31,7 +31,7 @@ pipeline {
                 }
             }
             steps {
-                echo 'Deploying ${env.BUILD_ID} to QA on ${env.JENKINS_URL}'
+                echo "Deploying ${env.BUILD_ID} to QA on ${env.JENKINS_URL}"
             }
         }
         stage('Deploying To PROD') {
@@ -39,7 +39,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                echo 'Deploying ${env.BUILD_ID} to PROD on ${env.JENKINS_URL}'
+                echo "Deploying ${env.BUILD_ID} to PROD on ${env.JENKINS_URL}"
             }
         }
     }
