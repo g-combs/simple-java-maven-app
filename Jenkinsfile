@@ -56,3 +56,7 @@ def deployBonsai(bonsaiEnv) {
 def deployQA() {
     deployBonsai("build-qa")
 }
+
+def deployPROD() {
+    deployBonsai("build-prod")
+}
