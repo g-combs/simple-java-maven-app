@@ -24,7 +24,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploying To QA') {
+        stage('Deploy To QA') {
             when {
                 not {
                     branch 'master'
@@ -35,7 +35,7 @@ pipeline {
                 deployQA()
             }
         }
-        stage('Deploying To PROD') {
+        stage('Deploy To PROD') {
             when {
                 branch 'master'
             }
@@ -50,6 +50,7 @@ def deployBonsai(bonsaiEnv) {
     stage('deployBonsai: ${bonsaiEnv}') {
         steps {
             echo "Deploying to Bonsai Env: ${bonsaiEnv}"
+            sh 'mvn verify'
         }
     }
 }
